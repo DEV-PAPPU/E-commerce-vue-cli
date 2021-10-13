@@ -1,28 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="nav">
+      <Header/>
+    </div>
+    <!-- custom top component -->
+    <top-component></top-component>
+      <Toast/>
+    <div class="router mt-10 px-20">
+      <router-view/>
+      <!-- set progressbar -->
+        <vue-progress-bar></vue-progress-bar>
+    </div>
+   <Footer/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Header from './components/frontend/partials/header.vue'
+import Footer from './components/frontend/partials/footer.vue'
+import TopComponent from './components/frontend/partials/Top_component.vue'
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+   components:{Header,Footer,TopComponent}
 }
 </script>
 
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.router-link-active {
+  color: #f8f8f8;
+  background: #2a885f;
+  border-radius: 5px;
+  
 }
 </style>
