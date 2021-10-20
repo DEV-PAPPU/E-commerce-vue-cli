@@ -98,7 +98,7 @@ export default new Vuex.Store({
 
           localStorage.setItem('cart', JSON.stringify(cart));
 
-         state.cartCount = 5
+        //  state.cartCount = 5
       },
   },
 

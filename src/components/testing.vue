@@ -1,115 +1,102 @@
 <template>
-    <div class="flex justify-bewteen items-center">
-        <hooper :settings="hooperSettings" style="height:500px">
-            <slide>
-                <div id="home" class="slider-section border-b-2 lg:py-8 border-gray-200 h-screen">
+    <div class="pos_products">
+        <tbody>
 
-                       <img src="../assets/images/ohero.jpg" alt="">
+        </tbody>
 
-                    <div class="slider-content section-padding flex gap-10">
+        <div class="form">
+            <form @submit.prevent="saleproduct">
 
-                        <div class="hero-section-left lg:py-10 text-green-600 md:my-5 text-left w-3/5	" data-aos="zoom-in">
-                            <h1 class="hero-heading text-5xl	">Best Ecommerce Online Store</h1>
-                            <p class="mt-10 text-green-600 text-xl	">I'm working on web development since 2018 I have
-                                done 200+projects. Like
-                                e-commerce site small,large-business site portfolio website. And done several bug-fixing
-                                projects using custom CSS, js and etc.
-                            </p>
-                            <div class="text-xl mt-10 items-center mt-8">
-                                <h1 class="heading mr-4"><span class="type">🔥 70% Discount! 🔥</span></h1>
-                            </div>
-                            <button id="service"
-                                class="mt-10 text-white  bg-green-600 border-0 py-2 px-8 focus:outline-none hover:bg-green-700 rounded text-md">SHOP
-                                NOW</button>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <select v-model="form.payment_method" name="payment_method" id="payment_method"
+                        class="form-control">
+                        <option value="" style="display: none" selected>Select Payment Method </option>
+                        <option value="0" selected>Hand Cash </option>
+                        <option value="paypal" selected>Paypal</option>
+                    </select>
                 </div>
-            </slide>
-
-            <slide>
-                <div id="home" class="slider-section border-b-2 lg:py-8 border-gray-200 h-screen">
-
-                       <img src="../assets/images/ohero.jpg" alt="">
-
-                    <div class="slider-content section-padding flex gap-10">
-
-                        <div class="hero-section-left lg:py-10 text-green-600 md:my-5 text-left w-3/5	" data-aos="zoom-in">
-                            <h1 class="hero-heading text-5xl	">Best Ecommerce Online Store</h1>
-                            <p class="mt-10 text-green-600 text-xl	">I'm working on web development since 2018 I have
-                                done 200+projects. Like
-                                e-commerce site small,large-business site portfolio website. And done several bug-fixing
-                                projects using custom CSS, js and etc.
-                            </p>
-                            <div class="text-xl mt-10 items-center mt-8">
-                                <h1 class="heading mr-4"><span class="type">🔥 70% Discount! 🔥</span></h1>
-                            </div>
-                            <button id="service"
-                                class="mt-10 text-white  bg-green-600 border-0 py-2 px-8 focus:outline-none hover:bg-green-700 rounded text-md">SHOP
-                                NOW</button>
-                        </div>
-                    </div>
-                </div>
-            </slide>
 
 
-            <hooper-pagination slot="hooper-addons"></hooper-pagination>
-        </hooper>
+               <div v-if="form.payment_method == 'paypal'">
+                   
+                   paypal
+                  
+                   <div  class="mt-5 paypal-payment">
+                      <div ref="paypal"></div>
+                   </div>
+
+               </div>
+
+
+                  <!-- <div  class="mt-5 paypal-payment">
+                      <div ref="paypal"></div>
+                  </div> -->
+            </form>
+        </div>
     </div>
 </template>
 
 <script>
-import { 
-    Hooper,
-    Slide,
-  Pagination as HooperPagination,
-   } from 'hooper';
-
-import 'hooper/dist/hooper.css';
-export default ({
-    components: {
-      Hooper,
-      Slide,
-    HooperPagination,
-      
-    },
-        data() {
-        return {
-            hooperSettings: {
-             itemsToShow: 1,
-             centerMode: true,
-             autoPlay: true,
-            hoverPause: true,
-            transition: 600,
-           }
-        }
+export default {
+  name: "HelloWorld",
+  data: function() {
+    return {
+      loaded: false,
+      paidFor: false,
+      form:{
+         payment_method: '',
+         price:''
       },
-
-    created() {
-        window.addEventListener('resize', this.handleResize);
-        this.handleResize();
-    },
-    destroyed() {
-        window.removeEventListener('resize', this.handleResize);
-    },
-    methods: {
-        handleResize() {
-            this.window.width = window.innerWidth;
-            this.window.height = window.innerHeight;
-        }
+      product: {
+        price: 777.77,
+        description: "leg lamp from that one movie",
+      }
+    };
+  },
+  mounted: function() {
+    const script = document.createElement("script");
+    script.src =
+      "https://www.paypal.com/sdk/js?client-id=AdGH9Y0lFtkfPAw2gFkQRa12l1YJKEiZsQq89pnZxPNw3H2I_Bu4Uw0uUomQU0xd4jZQiv8P5DkSAuE1";
+    script.addEventListener("load", this.setLoaded);
+    document.body.appendChild(script);
+  },
+  methods: {
+    setLoaded: function() {
+      this.loaded = true;
+      window.paypal
+        .Buttons({
+          createOrder: (data, actions) => {
+            return actions.order.create({
+              purchase_units: [
+                {
+                  description: this.product.description,
+                  amount: {
+                    currency_code: "USD",
+                    value: this.form.price
+                  }
+                }
+              ]
+            });
+          },
+          onApprove: async (data, actions) => {
+            const order = await actions.order.capture();
+            this.paidFor = true;
+            console.log(order);
+          },
+          onError: err => {
+            console.log(err);
+          }
+        })
+        .render(this.$refs.paypal);
     }
-})
+  },
+
+
+        computed:{
+            paypal(){
+                 return this.form.payment_method
+            },
+
+        },
+};
 </script>
-
-<style scoped>
-.slider-section{
-    position: relative;
-}
-
-.slider-content{
-  position: absolute;
-  top: 0px;
-  left: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-</style>

@@ -82,7 +82,7 @@ import axios from 'axios';
 
 export default {
         metaInfo: {
-        title: 'Shop Page',
+        title: 'Shop',
         },
     data(){
         return {

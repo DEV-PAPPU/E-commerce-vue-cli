@@ -141,9 +141,11 @@ export default {
 
         //Deleting product from cart
         deletecart(id){
+            
             let storageProducts = JSON.parse(localStorage.getItem('cart'));
             let products = storageProducts.filter(product => product.product_id !== id );
             localStorage.setItem('cart', JSON.stringify(products));
+
             this.loadCart();
             this.$store.commit('SET_TOAST', 'success')
             this.$store.commit('SET_TOAST_MASSAGE', 'Product Removed')
@@ -187,8 +189,15 @@ export default {
           let items = cart.find(item => item.product_id === id);
          
          if (items) {
+
               if(items.quantity == 1){
-                 alert('Please keep minimun 1 quantity')
+                //  alert('Please keep minimun 1 quantity')
+                 this.$store.commit('SET_TOAST', 'error')
+                 this.$store.commit('SET_TOAST_MASSAGE', 'Please keep minimun 1 quantity')
+                 setTimeout(() => {
+                 this.$store.commit('SET_TOAST', false);
+                }, 2000);
+
               }else{
                   items.quantity--
               }

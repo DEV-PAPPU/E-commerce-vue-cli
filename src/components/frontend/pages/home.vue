@@ -79,7 +79,6 @@
                 </div>
             </div>
         </div>
-        <!-- End Categorie Lists -->
 
         <!-- End service about--->
     </div>
@@ -87,7 +86,7 @@
 
 <script>
 import axios from 'axios'
-import Homeslider from '../components/home_slider/Home_slider.vue'
+import Homeslider from '../components/home_slider/Home_slider'
     export default {
     components:{Homeslider},
         metaInfo: {
@@ -96,6 +95,7 @@ import Homeslider from '../components/home_slider/Home_slider.vue'
         data() {
             return {
                 products:'',
+                fakeproducts:{},
                 product:'',
                 categories:{},
                cart_item: {
@@ -116,7 +116,8 @@ import Homeslider from '../components/home_slider/Home_slider.vue'
                   this.product = response.data
             })
          },
-         
+
+        
         addTocart(product) {
 
             // let products = [];

@@ -2,13 +2,13 @@
     <div class="flex justify-bewteen items-center">
         <hooper :settings="hooperSettings" style="height:530px">
             <slide>
-                <div id="home" class="slider-section border-b-2 border-gray-200 ">
+                <div class="slider-section border-b-2 border-gray-200 ">
 
-                       <img src="../../../../assets/images/ohero.jpg" alt="">
+                       <img src="../../../../assets/images/ohero.jpg" alt="" class="w-full">
 
-                    <div class="slider-content section-padding flex gap-10">
+                    <div class="slider-content">
 
-                        <div class="hero-section-left lg:py-10 text-gray-600 md:my-5 text-left w-3/5	" data-aos="zoom-in">
+                        <div class="hero-section-left lg:py-10 text-gray-600 md:my-5 text-left w-3/5" data-aos="zoom-in">
                             <h1 class="hero-heading text-5xl	">Best Ecommerce Online Store</h1>
                             <p class="mt-10 text-gray-600 text-xl	">I'm working on web development since 2018 I have
                                 done 200+projects. Like
@@ -27,13 +27,13 @@
             </slide>
 
             <slide>
-                <div id="home" class="slider-section border-b-2 border-gray-200">
+                <div class="slider-section border-b-2 border-gray-200">
 
-                       <img src="../../../../assets/images/ohero.jpg" alt="">
+                       <img src="../../../../assets/images/ohero.jpg" alt="" class="w-full">
 
-                    <div class="slider-content section-padding flex gap-10">
+                    <div class="slider-content">
 
-                        <div class="hero-section-left lg:py-10 text-gray-600 md:my-5 text-left w-3/5	" data-aos="zoom-in">
+                        <div class="hero-section-left lg:py-10 text-gray-600 md:my-5 text-left w-3/5" data-aos="zoom-in">
                             <h1 class="hero-heading text-5xl	">Best Ecommerce Online Store</h1>
                             <p class="mt-10 text-gray-600 text-xl	">I'm working on web development since 2018 I have
                                 done 200+projects. Like

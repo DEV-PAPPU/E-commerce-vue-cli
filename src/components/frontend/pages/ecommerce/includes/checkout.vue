@@ -189,8 +189,6 @@ export default {
 
         order() {
 
-                // this.form.first_name = this.auth.name;
-                // this.form.email = this.auth.email;
                 this.form.subtotal = this.product_subtotal
 
             axios.post('order', this.form,{
@@ -204,8 +202,7 @@ export default {
                             localStorage.removeItem('cart')
                         }
 
-                        alert(massage)
-                        // this.$router.push({name:'order-confirm'});
+                        this.$router.push({name:'Order-complated'});
                     })
                     .catch(e =>{this.errors = e.response.data.errors;});
             },
@@ -243,8 +240,12 @@ export default {
                             document.getElementById("coupon-div").style.display = "none";
                         }
                         else{
-                           alert(massage);
-                        }
+                            this.$store.commit('SET_TOAST', 'error')
+                            this.$store.commit('SET_TOAST_MASSAGE', massage)
+                            setTimeout(() => {
+                                this.$store.commit('SET_TOAST', false);
+                                }, 3000);
+                            }
                     })
               },
 
@@ -255,6 +256,10 @@ export default {
         computed:{
 
             auth(){
+                return this.$store.getters.getUser;
+            },
+            
+            set_authuser_email(){
                 return this.$store.getters.getUser;
             },
 

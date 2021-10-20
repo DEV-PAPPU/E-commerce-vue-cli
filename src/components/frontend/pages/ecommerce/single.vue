@@ -1,6 +1,7 @@
 <template>
     <div class="container text-left">
         <Breadcrumb :breadcrumb="breadcrumb"/>
+
         <div class="product-single lg:flex md:flex justify-items-start	">
             <div class="image w-2/4">
 
@@ -10,8 +11,13 @@
                 </template>
 
                 <div v-else class="content">
+                   
+                    <div style="width:600px">
+                        
+                        <zoom-on-hover :img-normal="url+imageshow" :scale="1.5" @loaded="onload" @resized="onresize"></zoom-on-hover>
 
-                    <img class="shadow feature-image" :src="url+imageshow" alt="blog" style="300px !important">
+                        <!-- <zoom-on-hover :img-normal="url+imageshow" :img-zoom="url+imageshow" :scale="1.5" @loaded="onload" @resized="onresize"></zoom-on-hover> -->
+                    </div>
 
                     <div v-if="Loading" class="mt-5">
                         <LoadingBg :height="60" />
@@ -142,7 +148,7 @@ import axios from 'axios';
             this.$store.commit('SET_TOAST_MASSAGE', 'Product added')
             setTimeout(() => {
                 this.$store.commit('SET_TOAST', false);
-                }, 2000);
+                }, 3000);
         },
 
 

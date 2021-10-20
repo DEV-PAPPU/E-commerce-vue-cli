@@ -6,7 +6,7 @@
 
                 <form v-if="isForm" @submit.prevent="ordertrack">
                     <div class="mb-6">
-                        <label class="block text-gray-800 font-bold">Your Tracking Id</label>
+                        <label class="block text-gray-800 font-bold">{{form_title}}</label>
                         <input type="text" v-model="form.number" placeholder="number"
                             class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600" required />
 
@@ -37,6 +37,7 @@ import axios from 'axios';
         title: 'Order Tracking',
         },
      data: () => ({
+        form_title: 'Track Your Order Status',
         Trackingdata: '',
         isForm: true,
         form: {
@@ -48,10 +49,21 @@ import axios from 'axios';
         methods: {
 
            ordertrack() {
-                axios.post('order-tracking',this.form).then(response => {
-                 this.Trackingdata = response.data;
+                axios.post('order-tracking',this.form).then(res => {
+                 this.Trackingdata = res.data;
+                
+                if(res.data.length){
+                    console.log(res)
+                 }else{
+                    this.$store.commit('SET_TOAST', 'error')
+                    this.$store.commit('SET_TOAST_MASSAGE', 'Invalid order id!')
+                    setTimeout(() => {
+                    this.$store.commit('SET_TOAST', false);
+                    }, 3000);
+                 } 
+
                  this.isForm = false;
-                 document.getElementById("cartTitle").innerHTML = "Your Order Status";
+                 this.form_title = 'Your Order Status'
                 })
             },
 

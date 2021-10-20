@@ -21,7 +21,7 @@
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Subtotal
+                                    Total
                                 </th>
                             </tr>
                         </thead>
@@ -48,7 +48,15 @@
                             </tr>
                         </tbody>
                         <tfoot class="mx-10">
-                            
+                            <div>
+                                <td class="p-3 text-left">
+                                    <strong>Subtotal </strong>
+                                </td>
+                                <td colspan="3" class="hidden-xs"></td>
+                                <td class="pr-10">
+                                   <strong>{{subtotal | currency}}</strong>
+                                </td>
+                            </div>
                         </tfoot>
 
                     </table>
@@ -78,6 +86,13 @@ import axios from 'axios';
                 console.log(response.data)
             });
         },
+
+    },
+
+    computed:{
+        subtotal(){
+            return this.products.reduce((a,b) => a+ (b.price * b.quantity), 0);
+        }
     },
     mounted(){
         this.loadproduct();

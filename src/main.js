@@ -17,6 +17,8 @@ Vue.use(VueProgressBar, {
   height: '4px'
 })
 
+import ZoomOnHover from "vue-zoom-on-hover";
+Vue.use(ZoomOnHover);
 
 Vue.component(
   'Toast', () => import('./components/assets/toast.vue')
@@ -51,7 +53,7 @@ Vue.filter('currency', value=> {
 
 Vue.filter('trim', value=> {
     if (!value) return ''
-    return value.substring(0, 40) + '...'
+    return value.substring(0, 20) + '...'
 });
 
 Vue.filter('trimpost', value=> {

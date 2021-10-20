@@ -5,10 +5,8 @@
 
             <!-- Website logo div-->
             <div class="logo">
-                <!-- <router-link class="menu-item" :to="{name: 'Home'}"><img src="https://development.rooberp.com/Devpappu/pappu.png"
-                        class="brang-logo" alt="" style="width:100px"></router-link> -->
-                        <img src="https://development.rooberp.com/Devpappu/pappu.png"
-                        class="brang-logo" alt="" style="width:100px">
+                <router-link :to="{name: 'Home'}"><img src="https://development.rooberp.com/Devpappu/pappu.png"
+                        class="brang-logo" alt="" style="width:100px"></router-link>
             </div>
 
             <!-- Menu itesms div-->
@@ -25,9 +23,9 @@
 
                 <nav class="nav-menu lg:flex">
 
-                    <li>
+                    <!-- <li>
                         <router-link class="menu-item" :to="{name: 'Home'}">Home</router-link>
-                    </li>
+                    </li> -->
                     
                     <li>
                         <router-link class="menu-item" :to="{name: 'Shop'}">Shop</router-link>

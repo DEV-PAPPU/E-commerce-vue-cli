@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import store from '../store/index';
+import store from '../store/index';
 
 Vue.use(VueRouter)
 
@@ -52,13 +52,13 @@ const routes = [
     name: 'Profile',
     component: () => import(/* webpackChunkName: "Profile" */ '../components/auth/userdashboard.vue'),
 
-    // beforeEnter: (to, from, next) => {
-    //   if(store.state.Authenticated == 'true'){
-    //       next();
-    //   }else{
-    //       return next({ name: 'Login'});
-    //   }
-    // },
+    beforeEnter: (to, from, next) => {
+      if(store.state.Authenticated){
+          next();
+      }else{
+          return next({ name: 'Login'});
+      }
+    },
 
     children:[
       {
@@ -92,6 +92,17 @@ const routes = [
     path: '/shop/category/:slug',
     name: 'Category-products',
     component: () => import(/* webpackChunkName: "test" */ '../components/frontend/pages/ecommerce/product_of_category.vue')
+  },
+  {
+    path: '/order-confirm',
+    name: 'Order-complated',
+    component: () => import(/* webpackChunkName: "test" */ '../components/frontend/pages/ecommerce/includes/order_complate.vue')
+  },
+
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: () => import("../components/frontend/partials/NotFound")
   },
 ]
 

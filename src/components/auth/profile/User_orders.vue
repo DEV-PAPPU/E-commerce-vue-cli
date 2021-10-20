@@ -58,14 +58,13 @@
                                     <div v-if="order.status == 0">
                                         <span>Processing</span>
                                     </div>
-
                                     <!-- <div v-else>
                                         <span>{{order.status}}</span>
                                     </div> -->
-
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{order.subtotal | currency}}
+                                   <span v-if="order.discount_price">Discount Price: {{order.discount_price | currency}}</span>
+                                    <span v-else>{{order.subtotal | currency}}</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <router-link :to="{name: 'Single-order', params: {id: order.id}}"
