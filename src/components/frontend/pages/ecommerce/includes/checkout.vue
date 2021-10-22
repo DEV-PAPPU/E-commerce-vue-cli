@@ -131,13 +131,9 @@
                                 class="form-text text-danger">{{errors.payment_method[0]}}</small>
 
                                 <div v-if="form.payment_method == 'paypal'" class="paypal-getway">
-                                   <h1>paypal </h1>
-                                   <Paypal/>
+                                   <Paypal :amount="product_subtotal" :onApprove="onApprove(event)"/>
                                 </div>
-                                <Paypal/>
-
                         </div>
-
                         <button type="submit" @click.prevent="order()"
                             class="h-12 mt-4 w-48 rounded font-medium text-xs bg-blue-500 text-white">Place
                             Order</button>
@@ -150,18 +146,17 @@
 
 <script>
 import axios from 'axios';
-import Paypal from '../../paypal/form.vue'
+import Paypal from '../../paypal/paypal.vue'
 export default {
-    components:[Paypal],
+    components:{Paypal},
      metaInfo: {
         title: 'checkout Page',
         },
     data(){
        return{
            form:{
-               email: 'pappu@gmail.com',
-               first_name: 'pappu',
-            //    last_name: '',
+               email: '',
+               first_name: '',
               address: '',
               zipcode: '',
                state: '',
@@ -187,24 +182,25 @@ export default {
 
     methods: {
 
-        order() {
+         test(){
+             alert('hello done')
+         },
+          order() {
+              this.form.subtotal = this.product_subtotal
+                axios.post('order', this.form,{
+                    headers:{
+                        authorization: 'Bearer' + localStorage.getItem('token')
+                    }
+                    }).then(response => {
+                        const massage = response.data.massage
+                            
+                            if(massage){
+                                localStorage.removeItem('cart')
+                            }
 
-                this.form.subtotal = this.product_subtotal
-
-            axios.post('order', this.form,{
-                headers:{
-                    authorization: 'Bearer' + localStorage.getItem('token')
-                }
-                }).then(response => {
-                       const massage = response.data.massage
-                        
-                        if(massage){
-                            localStorage.removeItem('cart')
-                        }
-
-                        this.$router.push({name:'Order-complated'});
-                    })
-                    .catch(e =>{this.errors = e.response.data.errors;});
+                            this.$router.push({name:'Order-complated'});
+                        })
+                        .catch(e =>{this.errors = e.response.data.errors;});
             },
 
               CouponApply(){
@@ -249,8 +245,11 @@ export default {
                     })
               },
 
-        },
+              onApprove(){
+                  this.test()
+              }
 
+        },
 
 
         computed:{

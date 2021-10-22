@@ -1,7 +1,6 @@
 <template>
-  <div class="paypal-payment">
+  <div class="mt-3 paypal-payment">
     <div ref="paypal"></div>
-    <div>{{amount}} hello</div>
   </div>
 </template>
 
@@ -12,22 +11,18 @@ export default {
     return {
       loaded: false,
       paidFor: false,
-      form:{
-         payment_method: '',
-         price:''
-      },
       product: {
-        price: 777.77,
         description: "leg lamp from that one movie",
       }
     };
   },
-  mounted: function() {
+  mounted(){
     const script = document.createElement("script");
     script.src =
       "https://www.paypal.com/sdk/js?client-id=AdGH9Y0lFtkfPAw2gFkQRa12l1YJKEiZsQq89pnZxPNw3H2I_Bu4Uw0uUomQU0xd4jZQiv8P5DkSAuE1";
     script.addEventListener("load", this.setLoaded);
     document.body.appendChild(script);
+    console.log('Paypal')
   },
   methods: {
     setLoaded: function() {
@@ -41,7 +36,7 @@ export default {
                   description: this.product.description,
                   amount: {
                     currency_code: "USD",
-                    value: this.form.price
+                    value: this.amount
                   }
                 }
               ]
@@ -51,20 +46,17 @@ export default {
             const order = await actions.order.capture();
             this.paidFor = true;
             console.log(order);
+            this.$router.push({name:'Order-complated'});
+            this.$emit('onApprove');
           },
           onError: err => {
-            console.log(err);
+            alert('Something is wrong', err)
+            console.log(err)
           }
         })
         .render(this.$refs.paypal);
     }
   },
 
-        computed:{
-            paypal(){
-                 return this.form.payment_method
-            },
-
-        },
 };
 </script>

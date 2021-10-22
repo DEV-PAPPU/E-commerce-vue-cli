@@ -101,14 +101,8 @@ export default {
     methods: {
         loadproduct(){
 
-                  this.$Progress.start()
             axios.get('shop').then(response => {
                 this.products = response.data;
-                
-                if(response.data){
-                    this.$Progress.finish()
-                }
-
             });
         },
 
