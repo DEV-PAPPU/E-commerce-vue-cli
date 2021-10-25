@@ -6,7 +6,7 @@
     <!-- custom top component -->
     <top-component></top-component>
       <Toast/>
-    <div class="router mt-10 px-20">
+    <div class="router mt-10 lg:px-20 px-5">
       <router-view/>
       <!-- set progressbar -->
         <vue-progress-bar></vue-progress-bar>
