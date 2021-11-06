@@ -2,7 +2,7 @@
     <div class="container">
 
         <div class="flex justify-center">
-            <div class="py-6 px-8 bg-white rounded shadow-xl w-1/2 text-left border-l-8 border-green-600">
+            <div class="py-6 px-8 bg-white rounded shadow-xl lg:w-1/2 text-left border-l-8 border-green-600">
 
                 <form v-if="isForm" @submit.prevent="ordertrack">
                     <div class="mb-6">
@@ -19,8 +19,7 @@
                 <div v-if="Trackingdata" class="trackingdata">
                    <h2>Your order status</h2>
                    <div class="mt-5">
-                      <span v-if="Trackingdata[0].status == '0'" class=" bg-green-600 p-2 text-white rounded"> Processing</span>
-                      <span v-if="Trackingdata[0].status == '3'" class=" bg-green-600 p-2 text-white rounded"> Complate</span>
+                      <span class=" bg-green-600 p-2 text-white rounded">{{Trackingdata[0].status | strToUpper}}</span>
                    </div>
                 </div>
             </div>

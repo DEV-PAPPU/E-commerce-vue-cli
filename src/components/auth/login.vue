@@ -1,8 +1,7 @@
 <template>
         <div class="flex justify-center">
-            <div class="py-6 px-8 bg-white rounded shadow-xl text-left border-l-8 border-green-600 w-2/6">
-            <h1 class="text-lg pl-2 text-gray-800 font-bold border-l-8 border-green-600">User Login</h1>
-
+            <div class="py-6 px-8 bg-white rounded shadow-xl text-left border-l-8 border-green-600 lg:w-2/6">
+            <h1 class="text-lg pl-2 text-gray-800 font-bold border-l-8 border-green-600">UserLogin</h1>
               <div v-if="errors" class="error">
                   <p>{{errors}}</p>
               </div>
@@ -27,7 +26,7 @@
                     <div class="flex items-center gap-10">
                         <button type="submit"
                         class="cursor-pointer py-2 px-4  mt-5 bg-green-600 hover:bg-green-700 text-white font-bold rounded">Login
-                        Now</button>
+                        </button>
 
                         <router-link :to="{name: 'Password-reset'}" class="mt-4 text-gray-500">
                         Forget password?</router-link>

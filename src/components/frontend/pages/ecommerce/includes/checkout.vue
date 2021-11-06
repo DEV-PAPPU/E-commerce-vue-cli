@@ -1,8 +1,8 @@
 <template>
     <div class="mt-3 text-left">
         <form >
-            <div class="grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-1 mx-12 gap-10">
-                <div class="py-12">
+            <div class="grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:gap-10">
+                <div class="">
                     <div class="bg-white shadow-lg rounded-lg">
                         <div class="md:flex ">
                             <div class="w-full p-4 px-5 py-5">
@@ -20,11 +20,11 @@
 
                                 <div class="relative pb-5"> <input type="text" v-model="form.email"
                                         class="border rounded h-10 w-full focus:outline-none focus:border-green-200 px-2 mt-2 text-sm"
-                                        :placeholder="AuthUser.email" readonly>
+                                        placeholder="email" readonly>
                                 </div> <span>Shipping Address</span>
                                 <div class="grid md:grid-cols-2 md:gap-2"> <input type="text" v-model="form.first_name"
                                         class="border rounded h-10 w-full focus:outline-none focus:border-green-200 px-2 mt-2 text-sm"
-                                        :placeholder="AuthUser.name" readonly>
+                                        placeholder="name" readonly>
 
                                     <div class="number">
                                         <input type="text" v-model="form.phone"
@@ -83,13 +83,9 @@
                 </div>
 
 
-                <div class="cart-content mt-12">
-                    <!-- Loading Amimation -->
-                    <template v-if="Loading">
-                        <content-loading />
-                    </template>
-                    <!-- Content -->
-                    <div v-else class="content px-5 py-12 bg-white shadow-lg rounded-lg">
+                <div class="cart-content lg:mt-0 md:mt-0 mt-10">
+
+                    <div class="content px-5 py-12 bg-white shadow-lg rounded-lg">
 
                         <div class="pb-3 coupon-checkbox" id="coupon-div">
                               <button @click.prevent="CouponApply()" class="h-6 mt-4 px-3 rounded font-medium text-sm bg-blue-500 text-white">Have Any Coupon?</button>
@@ -103,7 +99,7 @@
                             </div>
                         </div>
 
-                        <ul v-for="cart in form.products" :key="cart.product_id">
+                        <ul v-for="cart in cartitem" :key="cart.product_id">
                             <li class="border-b border-gray-200 pb-1">{{ cart.name }} $
                                 {{ cart.quantity * cart.price }}</li>
                         </ul>
@@ -118,25 +114,9 @@
                             </div>
                         </div>
 
-                        <div class="form-group mt-10">
-                            <label for="payment_method">Payment Method</label>
-                            <select v-model="form.payment_method" id="payment_method" class="mt-3 w-full p-2 border border-gray-300 ">
-                                <option value="" style="display: none" selected>Select Payment Method</option>
-                                <option value="cod" selected>Cash on Delivery (COD)
-                                </option>
-                                <option value="paypal" selected>Paypal
-                                </option>
-                            </select>
-                            <small v-if="errors.payment_method"
-                                class="form-text text-danger">{{errors.payment_method[0]}}</small>
-
-                                <div v-if="form.payment_method == 'paypal'" class="paypal-getway">
-                                   <Paypal :amount="product_subtotal" :onApprove="onApprove(event)"/>
-                                </div>
-                        </div>
                         <button type="submit" @click.prevent="order()"
-                            class="h-12 mt-4 w-48 rounded font-medium text-xs bg-blue-500 text-white">Place
-                            Order</button>
+                            class="h-12 mt-4 w-48 rounded font-medium text-xs bg-blue-500 text-white">Next payment
+                            </button>
                     </div>
                 </div>
             </div>
@@ -146,14 +126,13 @@
 
 <script>
 import axios from 'axios';
-import Paypal from '../../paypal/paypal.vue'
 export default {
-    components:{Paypal},
      metaInfo: {
         title: 'checkout Page',
         },
     data(){
        return{
+           cartitem: JSON.parse(localStorage.getItem('cart')),
            form:{
                email: '',
                first_name: '',
@@ -177,28 +156,22 @@ export default {
            shoppingcart:{},
            subtotal:'',
            discount_amount:'',
+           form_data:JSON.parse(localStorage.getItem('checkoutForm'))
        }
     },
 
     methods: {
 
-         test(){
-             alert('hello done')
-         },
           order() {
               this.form.subtotal = this.product_subtotal
-                axios.post('order', this.form,{
-                    headers:{
-                        authorization: 'Bearer' + localStorage.getItem('token')
-                    }
-                    }).then(response => {
+                axios.post('checkout-form-check', this.form).then(response => {
                         const massage = response.data.massage
-                            
-                            if(massage){
-                                localStorage.removeItem('cart')
+                              
+                            if(massage == 'success'){
+                                localStorage.setItem('checkoutForm', JSON.stringify(this.form));
                             }
 
-                            this.$router.push({name:'Order-complated'});
+                            this.$router.push({name:'Payment'});
                         })
                         .catch(e =>{this.errors = e.response.data.errors;});
             },
@@ -251,19 +224,14 @@ export default {
 
         },
 
-
         computed:{
 
             auth(){
                 return this.$store.getters.getUser;
             },
-            
-            set_authuser_email(){
-                return this.$store.getters.getUser;
-            },
 
             product_subtotal(){
-                return this.form.products.reduce((a,b) => a+ (b.price * b.quantity), 0);
+                return this.cartitem.reduce((a,b) => a+ (b.price * b.quantity), 0);
             }
         },
 
@@ -273,7 +241,12 @@ export default {
                 this.subtotal = res.data.total
             });
 
-            this.form.products = JSON.parse(localStorage.getItem('cart'));
+            this.form.first_name = this.AuthUser.name;
+            this.form.email = this.AuthUser.email;
+           
+           if(this.form_data){
+              this.form = JSON.parse(localStorage.getItem('checkoutForm'));
+            }
        }
 
 }

@@ -1,38 +1,76 @@
 <template>
     <div>
         <!-- Start hero section-->
+        <div class="grid lg:grid-cols-2 grid-cols-1 hero-section lg:mx-20 mx-5 gap-8 mt-28">
 
-        <div id="home" class="hero-section shadow-lg">
+             <div class="rounded">
+                 <Homeslider/>
+             </div>
 
-             <Homeslider/>
+             <div class="">
+                 <div v-if="latest_products.length"
+                class="grid lg:grid-cols-3 grid-cols-2 md:grid-cols-3 gap-5  pb-5">
+                <div v-for="product in latest_products" :key="product.id" class="">
+            
+                    <div class="mb-2">
+                        <div
+                            class="border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden bg-white  shadow-sm hover:shadow-sm">
+
+                            <template v-if="Loading">
+                                <default-image/>
+                             </template>
+
+                            <template v-else>
+                                <router-link :to="{name: 'Product-Single', params: {slug: product.slug}}">
+                                <img :src="url+product.image" class="product-image">
+                               </router-link>
+                            </template>
+
+                            <div class="lg:px-6 md:px-6 px-2 lg:py-5 py-4">
+                               
+                                <!-- <h1 class="title-font text-lg font-medium text-gray-900 mt-2 mb-4">{{product.title}} 🔥</h1> -->
+
+                                 <div class="flex items-center justify-between">
+                                      <h2 class="font-medium">{{product.price | currency}}</h2>
+                                      <button @click="addTocart(product)" class="font-medium">Add to cart</button>
+                                 </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             </div>
 
         </div>
 
         <!-- End hero section--->
 
-
         <!-- Categorie Lists -->
 
-        <div class="category mt-32">
+        <div class="mt-5 lg:mx-20 mx-5">
 
-                      <div class="service-info-heading container-box text-center">
-                <h1 class="heading before-after text-3xl">🔥🔥 Best Product Categories🔥🔥</h1>
-            </div>
-
-                <div v-if="categories.length"
-                class="grid lg:grid-cols-5 sm:grid-cols-1 md:grid-cols-2 gap-5 shop my-10 py-10 ">
-                <div v-for="category in categories" :key="category.id" class="">
+        <div class="category">
+                <div
+                class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-5">
+                <div v-for="category in categories" :key="category.id" class="card">
+                   
                     <div class="mb-2">
                         <div
-                            class="border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden bg-white  shadow-sm hover:shadow-sm">
+                            class="border-2 border-gray-200 border-opacity-60 rounded-2xl overflow-hidden bg-white  shadow-sm hover:shadow-sm">
 
-                            <img :src="url+category.image" class="category-image">
-                            <div class="p-6">
+                             <template v-if="Loading">
+                                <default-image/>
+                             </template>
+
+                            <img v-else :src="url+category.image" class="category-image">
+                            <div class="p-3">
                                 <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-2">
                                 </h2>
 
                                 <router-link :to="{name: 'Category-products', params: {slug: category.slug}}"
-                                    class="bg-green-600 text-white py-2 px-5 text-sm font-medium  block mb-1">{{category.name}} -></router-link>
+                                    class="text-center text-md font-medium  block mb-1">{{category.name}}</router-link>
                             </div>
                         </div>
                     </div>
@@ -45,7 +83,7 @@
             class="product mb-24 border-b-2 border-gray-200 my-20 items-center">
 
             <div class="service-info-heading container-box text-center">
-                <h1 class="heading before-after text-3xl">🔥🔥 Best Tranding Products 🔥🔥</h1>
+                <h1 class="heading before-after lg:text-3xl text-2xl">🔥🔥 Tranding Products 🔥🔥</h1>
             </div>
 
 
@@ -59,7 +97,7 @@
                             <img :src="url+product.image" class="product-image">
                             <div class="p-6">
                                
-                                <h1 class="title-font text-lg font-medium text-gray-900 mt-2 mb-4">🔥 {{product.title}} 🔥</h1>
+                                <h1 class="title-font text-lg font-medium text-gray-900 mt-2 mb-4">{{product.title}}</h1>
                                  
 
                                  <div class="flex items-center">
@@ -79,6 +117,7 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- End service about--->
     </div>
@@ -96,6 +135,7 @@ import Homeslider from '../components/home_slider/Home_slider'
             return {
                 products:'',
                 fakeproducts:{},
+                latest_products:{},
                 product:'',
                 categories:{},
                cart_item: {
@@ -145,11 +185,16 @@ import Homeslider from '../components/home_slider/Home_slider'
             // localStorage.setItem('products', JSON.stringify(products));
 
             this.$store.commit('ADD_TO_CART', product);
-            this.$store.commit('SET_TOAST', 'success')
-            this.$store.commit('SET_TOAST_MASSAGE', 'Product added')
-            setTimeout(() => {
-                this.$store.commit('SET_TOAST', false);
-                }, 2000);
+            // this.$store.commit('SET_TOAST', 'success')
+            // this.$store.commit('SET_TOAST_MASSAGE', 'Product added')
+            // setTimeout(() => {
+            //     this.$store.commit('SET_TOAST', false);
+            //     }, 2000);
+
+            this.$toast.success({
+                    title:'Success!',
+                    message:'Product added.'
+                })
         },
 
 
@@ -166,6 +211,10 @@ import Homeslider from '../components/home_slider/Home_slider'
 
              axios.get('public/category').then(response=>{
                   this.categories = response.data
+            })
+
+             axios.get('latest-products').then(res=>{
+                  this.latest_products = res.data
             })
             
 
@@ -235,6 +284,12 @@ nav > div a.nav-item.nav-link:focus
 
 .router{
     padding: 0px !important;
+}
+
+img.category-image {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
 }
 
 </style>

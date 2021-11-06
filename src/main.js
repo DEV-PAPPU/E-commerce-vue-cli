@@ -20,6 +20,24 @@ Vue.use(VueProgressBar, {
 import ZoomOnHover from "vue-zoom-on-hover";
 Vue.use(ZoomOnHover);
 
+// CxltToastr
+import CxltToastr from 'cxlt-vue2-toastr'
+import 'cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css'
+
+var toastrConfigs = {
+    position: 'top right',
+    showDuration: 1000,
+    timeOut: 5000,
+    closeButton: true,
+    showMethod: 'fadeIn',
+    hideMethod: 'fadeOut',
+    color:'#9810B3',
+    // progressBar: true,
+}
+Vue.use(CxltToastr, toastrConfigs)
+
+
+
 Vue.component(
   'Toast', () => import('./components/assets/toast.vue')
 );
@@ -37,6 +55,10 @@ Vue.component(
 );
 Vue.component(
   'TopComponent', () => import('./components/frontend/partials/Top_component.vue')
+);
+  
+Vue.component(
+  'DefaultImage', () => import('./components/assets/defaultimg.vue')
 );
   
 Vue.config.productionTip = false
@@ -79,6 +101,7 @@ Vue.mixin({
 
       url(){
         return  'http://ecommerce.test';
+        // return  'https://ecombackend.devpappu.com';
       },
   
       Authenticated(){
@@ -91,6 +114,11 @@ Vue.mixin({
       Loading(){
       return  this.$store.getters.Get_Loading;
       },
+
+      currentRouteName() {
+        return this.$route.name;
+    }
+
 
   }
 

@@ -1,6 +1,6 @@
 <template>
-    <div class="flex justify-center">
-        <div class="py-6 px-8 bg-white rounded shadow-xl w-1/2 text-left border-l-8 border-green-600 w-2/6">
+    <div class="lg:flex justify-center">
+        <div class="py-6 px-8 bg-white rounded shadow-xl text-left border-l-8 border-green-600 lg:w-2/6">
             <h1 class="text-lg pl-2 text-gray-800 font-bold border-l-8 border-green-600">Password Reset</h1>
             <div v-if="errors" class="error">
                 <p>{{errors}}</p>

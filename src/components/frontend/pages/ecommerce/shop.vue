@@ -3,8 +3,9 @@
         <top-component>
             <Breadcrumb :breadcrumb="breadcrumb"/>
         </top-component>
-        <div class=" flex gap-10">
-            <div class="filter bg-white p-4 rounded w-48 border-l-8 border-green-600">
+        <div class="lg:flex lg:gap-10">
+           
+            <div class="filter bg-white p-4 rounded lg:w-48 md:w-48 border-l-8 border-green-600 w-full">
                 <h1 class="bg-green-600 text-sm rounded p-2 text-white">Product Filter</h1>
                 <div class="form mt-5">
                     <form @submit.prevent="filter">
@@ -20,7 +21,7 @@
                 </div>
             </div>
 
-            <div v-if="products.length" class="product grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-10 w-full">
+            <div v-if="products.length" class="product grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-2 gap-10 w-full">
                 <div v-for="product in products" :key="product.id" class="">
 
                     <!-- Loading Amimation -->
@@ -108,11 +109,16 @@ export default {
 
         addTocart(product) {
             this.$store.commit('ADD_TO_CART', product)
-            this.$store.commit('SET_TOAST', 'success')
-            this.$store.commit('SET_TOAST_MASSAGE', 'Product added')
-            setTimeout(() => {
-                this.$store.commit('SET_TOAST', false);
-                }, 2000);
+
+            this.$toast.success({
+                    title:'Success!',
+                    message:'Product added.'
+                })
+            // this.$store.commit('SET_TOAST', 'success')
+            // this.$store.commit('SET_TOAST_MASSAGE', 'Product added')
+            // setTimeout(() => {
+            //     this.$store.commit('SET_TOAST', false);
+            //     }, 2000);
             // this.$store.dispatch('checkdispatch')
         },
 
@@ -139,4 +145,14 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+
+@media screen and (max-width: 768px) {
+.filter{
+    margin-bottom: 3rem;
+}
+}
+
+</style>
 

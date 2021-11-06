@@ -3,7 +3,7 @@
         <Breadcrumb :breadcrumb="breadcrumb"/>
 
         <div class="product-single lg:flex md:flex justify-items-start	">
-            <div class="image w-2/4">
+            <div class="image lg:w-2/4 md:w-2/4">
 
                 <!-- Loading Amimation -->
                 <template v-if="Loading">
@@ -12,7 +12,7 @@
 
                 <div v-else class="content">
                    
-                    <div style="width:600px">
+                    <div class="w-full">
                         
                         <zoom-on-hover :img-normal="url+imageshow" :scale="1.5" @loaded="onload" @resized="onresize"></zoom-on-hover>
 
@@ -34,7 +34,7 @@
             </div>
 
 
-            <div class="content mt-3 ml-10 w-2/4">
+            <div class="content mt-3 lg:ml-10 md:ml-10 lg:w-2/4 md:w-2/4">
 
                 <template v-if="Loading">
                     <LoadingBg :height="20" />
@@ -144,11 +144,10 @@ import axios from 'axios';
 
          addTocart(product) {
             this.$store.commit('ADD_TO_CART', product);
-            this.$store.commit('SET_TOAST', 'success')
-            this.$store.commit('SET_TOAST_MASSAGE', 'Product added')
-            setTimeout(() => {
-                this.$store.commit('SET_TOAST', false);
-                }, 3000);
+            this.$toast.success({
+                    title:'Success!',
+                    message:'Product added.'
+                })
         },
 
 

@@ -2,11 +2,11 @@
   <div id="app">
     <div id="nav">
       <Header/>
+      <Toast/>
     </div>
     <!-- custom top component -->
     <top-component></top-component>
-      <Toast/>
-    <div class="router mt-10 lg:px-20 px-5">
+    <div :class="currentRouteName == 'Home' ? 'mt-30': 'lg:px-20 px-5 lg:mt-40 mt-32' " class="main-app">
       <router-view/>
       <!-- set progressbar -->
         <vue-progress-bar></vue-progress-bar>

@@ -32,12 +32,8 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200 text-left w-full">
                             
-                        <!--Filter product-->
-                        <template v-if="Loading" class="w-64">
-                             <content-loading /> 
-                        </template>
 
-                            <tr v-else v-for="order in orders" :key="order.id">
+                            <tr  v-for="order in orders" :key="order.id">
                                 <td class="py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="ml-5">
@@ -47,21 +43,17 @@
                                         </div>
                                     </div>
                                 </td>
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{order.created_at | dateformat }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div v-if="order.status == 3">
-                                        <span>Complate</span>
-                                    </div>
 
-                                    <div v-if="order.status == 0">
-                                        <span>Processing</span>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div>
+                                        <span>{{order.status | strToUpper}}</span>
                                     </div>
-                                    <!-- <div v-else>
-                                        <span>{{order.status}}</span>
-                                    </div> -->
                                 </td>
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                    <span v-if="order.discount_price">Discount Price: {{order.discount_price | currency}}</span>
                                     <span v-else>{{order.subtotal | currency}}</span>

@@ -5,8 +5,9 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  props:['amount'],
+  props:['products_with_form_data'],
   data: function() {
     return {
       loaded: false,
@@ -36,7 +37,7 @@ export default {
                   description: this.product.description,
                   amount: {
                     currency_code: "USD",
-                    value: this.amount
+                    value: this.products_with_form_data.subtotal
                   }
                 }
               ]
@@ -48,6 +49,9 @@ export default {
             console.log(order);
             this.$router.push({name:'Order-complated'});
             this.$emit('onApprove');
+            alert('payment done');
+            this.order();
+
           },
           onError: err => {
             alert('Something is wrong', err)
@@ -55,6 +59,18 @@ export default {
           }
         })
         .render(this.$refs.paypal);
+    },
+
+    order(){
+       axios.post('order',this.products_with_form_data,{
+            headers:{
+                authorization: 'Bearer' + localStorage.getItem('token')
+            }
+        }).then(res =>{
+         if(res.data.massage){
+           localStorage.removeItem('cart');
+         }
+       })
     }
   },
 

@@ -79,6 +79,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "Checkout" */ '../components/frontend/pages/ecommerce/includes/checkout.vue')
   },
   {
+    path: '/payment',
+    name: 'Payment',
+    component: () => import(/* webpackChunkName: "Checkout" */ '../components/frontend/pages/ecommerce/includes/payment.vue')
+  },
+  {
     path: '/password/reset',
     name: 'Password-reset',
     component: () => import(/* webpackChunkName: "Password-reset" */ '../components/auth/Password_reset')

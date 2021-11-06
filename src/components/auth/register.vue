@@ -1,6 +1,6 @@
 <template>
-        <div class="flex justify-center ">
-            <div class="py-6 px-8 bg-white rounded w-2/6 text-left border-l-8 border-green-600">
+        <div class="lg:flex justify-center ">
+            <div class="py-6 px-8 bg-white rounded lg:w-2/6 text-left border-l-8 border-green-600">
                 <form @submit.prevent="rigister">
                     <div class="mb-6">
                         <label class="block text-gray-800 font-bold">Name</label>

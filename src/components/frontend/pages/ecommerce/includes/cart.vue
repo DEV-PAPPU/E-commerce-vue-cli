@@ -1,13 +1,8 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
     <div class="flex flex-col">
-        <!-- Loading Amimation -->
-        <!-- <template v-if="Loading">
-            <content-loading />
-        </template> -->
-        <!-- Content -->
         <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div v-if="cart" class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div v-if="cart.length" class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
@@ -116,7 +111,15 @@
             </div>
 
              <div v-else>
-                     No Product In Your Cart!
+                     <div class="flex justify-center aligne-items-center">
+                        <div class="border-b-8 border-green-600 bg-white lg:w-6/12 md:w-5/12 px-16 lg:py-24 md:py-24 py-8 shadow-lg rounded-md flex justify-center">
+                              
+                             <div>
+                                <img src="../../../../../assets/images/cartimg.png" class="cart-img" alt="" srcset="">
+                             </div>
+
+                        </div>
+                     </div>
              </div>
         </div>
     </div>
@@ -145,13 +148,18 @@ export default {
             let storageProducts = JSON.parse(localStorage.getItem('cart'));
             let products = storageProducts.filter(product => product.product_id !== id );
             localStorage.setItem('cart', JSON.stringify(products));
+            
+            this.$toast.success({
+                    title:'Success!',
+                    message:'Product Removed.'
+                })
 
-            this.loadCart();
-            this.$store.commit('SET_TOAST', 'success')
-            this.$store.commit('SET_TOAST_MASSAGE', 'Product Removed')
-            setTimeout(() => {
-                this.$store.commit('SET_TOAST', false);
-                }, 2000);
+            // this.loadCart();
+            // this.$store.commit('SET_TOAST', 'success')
+            // this.$store.commit('SET_TOAST_MASSAGE', 'Product Removed')
+            // setTimeout(() => {
+            //     this.$store.commit('SET_TOAST', false);
+            //     }, 2000);
         },
 
 
@@ -224,6 +232,11 @@ export default {
 
 
 <style scoped>
+
+img.cart-img {
+    width: 180px;
+}
+
 
 .customcolor{
     background: brown;

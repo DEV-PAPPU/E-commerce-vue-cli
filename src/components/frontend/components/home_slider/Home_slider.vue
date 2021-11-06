@@ -1,6 +1,6 @@
 <template>
-    <div class="flex justify-bewteen items-center">
-        <hooper :settings="hooperSettings" style="height:530px">
+    <div class="flex justify-bewteen items-center rounded">
+        <hooper :settings="hooperSettings" class="slider-item">
             <slide>
                 <div class="slider-section border-b-2 border-gray-200 ">
 
@@ -8,13 +8,9 @@
 
                     <div class="slider-content">
 
-                        <div class="hero-section-left lg:py-10 text-gray-600 md:my-5 text-left w-3/5" data-aos="zoom-in">
-                            <h1 class="hero-heading text-5xl	">Best Ecommerce Online Store</h1>
-                            <p class="mt-10 text-gray-600 text-xl	">I'm working on web development since 2018 I have
-                                done 200+projects. Like
-                                e-commerce site small,large-business site portfolio website. And done several bug-fixing
-                                projects using custom CSS, js and etc.
-                            </p>
+                        <div class="hero-section-left lg:py-10 text-gray-600 md:my-5 text-left" data-aos="zoom-in">
+                            <h1 class="lg:text-5xl text-2xl">Ecommerce Online Store</h1>
+                            
                             <div class="text-xl mt-10 items-center mt-8">
                                 <h1 class="heading mr-4"><span class="type">🔥 70% Discount! 🔥</span></h1>
                             </div>
@@ -33,18 +29,14 @@
 
                     <div class="slider-content">
 
-                        <div class="hero-section-left lg:py-10 text-gray-600 md:my-5 text-left w-3/5" data-aos="zoom-in">
-                            <h1 class="hero-heading text-5xl	">Best Ecommerce Online Store</h1>
-                            <p class="mt-10 text-gray-600 text-xl	">I'm working on web development since 2018 I have
-                                done 200+projects. Like
-                                e-commerce site small,large-business site portfolio website. And done several bug-fixing
-                                projects using custom CSS, js and etc.
-                            </p>
+                        <div class="hero-section-left lg:py-10 text-gray-600 md:my-5 text-left" data-aos="zoom-in">
+                            <h1 class="lg:text-5xl text-2xl">Ecommerce Online Store</h1>
+                            
                             <div class="text-xl mt-10 items-center mt-8">
                                 <h1 class="heading mr-4"><span class="type">🔥 70% Discount! 🔥</span></h1>
                             </div>
                             <button id="service"
-                                class="mt-10 text-white  bg-green-600 border-0 py-2 px-8 focus:outline-none hover:bg-green-700 rounded text-md">SHOP
+                                class="mt-10 text-white bg-green-600 border-0 py-2 px-8 focus:outline-none hover:bg-green-700 rounded text-md">SHOP
                                 NOW</button>
                         </div>
                     </div>
@@ -111,6 +103,16 @@ export default ({
   left: 20px;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.slider-item{
+    height: 400px;
+}
+
+@media screen and (max-width: 768px){
+.slider-item{
+    height: 240px;
+}
 }
 
 </style>
