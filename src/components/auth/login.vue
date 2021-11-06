@@ -53,11 +53,13 @@ export default {
         }
         },
     methods:{
+
          login(){
             axios.post('auth/login',this.form).then(response =>{
            
              const token = response.data.access_token;
-
+             
+             //checking user 
              if(token){
                   this.$store.commit('SET_AUTHENTICATED',true);
                   this.$router.push({name:'Profile'});
