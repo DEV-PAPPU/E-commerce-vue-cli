@@ -1,64 +1,30 @@
 <template>
     <div>
         <!-- Start hero section-->
-        <div class="grid lg:grid-cols-2 grid-cols-1 hero-section lg:mx-20 mx-5 gap-8 mt-28">
+        <div class="lg:mx-20 mx-5 mt-28 lg:flex gap-10">
 
-             <div class="rounded">
+            <div class="slider w-3/12">
+                <SideBar/>
+            </div>
+             <div class="lg:w-9/12">
                  <Homeslider/>
              </div>
-
-             <div class="">
-                 <div v-if="latest_products.length"
-                class="grid lg:grid-cols-3 grid-cols-2 md:grid-cols-3 gap-5  pb-5">
-                <div v-for="product in latest_products" :key="product.id" class="">
-            
-                    <div class="mb-2">
-                        <div
-                            class="border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden bg-white  shadow-sm hover:shadow-sm">
-
-                            <template v-if="Loading">
-                                <default-image/>
-                             </template>
-
-                            <template v-else>
-                                <router-link :to="{name: 'Product-Single', params: {slug: product.slug}}">
-                                <img :src="url+product.image" class="product-image">
-                               </router-link>
-                            </template>
-
-                            <div class="lg:px-6 md:px-6 px-2 lg:py-5 py-4">
-                               
-                                <!-- <h1 class="title-font text-lg font-medium text-gray-900 mt-2 mb-4">{{product.title}} 🔥</h1> -->
-
-                                 <div class="flex items-center justify-between">
-                                      <h2 class="font-medium">{{product.price | currency}}</h2>
-                                      <button @click="addTocart(product)" class="font-medium">Add to cart</button>
-                                 </div>
-
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             </div>
-
         </div>
 
         <!-- End hero section--->
 
         <!-- Categorie Lists -->
 
-        <div class="mt-5 lg:mx-20 mx-5">
+        <div class="lg:mt-5 lg:mx-20 mx-5">
 
         <div class="category">
                 <div
-                class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-5">
+                class="grid lg:grid-cols-8 md:grid-cols-3 grid-cols-2 gap-5">
                 <div v-for="category in categories" :key="category.id" class="card">
                    
                     <div class="mb-2">
                         <div
-                            class="border-2 border-gray-200 border-opacity-60 rounded-2xl overflow-hidden bg-white  shadow-sm hover:shadow-sm">
+                            class="border-2 border-gray-200 border-opacity-60 rounded-md bg-white  shadow-sm hover:shadow-sm">
 
                              <template v-if="Loading">
                                 <default-image/>
@@ -85,37 +51,9 @@
             <div class="service-info-heading container-box text-center">
                 <h1 class="heading before-after lg:text-3xl text-2xl">🔥🔥 Tranding Products 🔥🔥</h1>
             </div>
-
-
-            <div v-if="products.length"
-                class="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-10 shop my-10 py-10">
-                <div v-for="product in products" :key="product.id" class="">
-                    <div class="mb-2">
-                        <div
-                            class="border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden bg-white  shadow-sm hover:shadow-sm">
-
-                            <img :src="url+product.image" class="product-image">
-                            <div class="p-6">
-                               
-                                <h1 class="title-font text-lg font-medium text-gray-900 mt-2 mb-4">{{product.title}}</h1>
-                                 
-
-                                 <div class="flex items-center">
-                                      <router-link :to="{name: 'Product-Single', params: {slug: product.slug}}"
-                                    class="text-white inline-block rounded mr-3 bg-green-600 hover:bg-green-700 py-3 px-10">View Product</router-link>
-
-                                    <button @click="addTocart(product)" class="rounded bg-green-600 text-2xl text-white hover:bg-green-700 py-2 px-3">
-                                        <i class="las la-cart-plus"></i>
-                                    </button>
-
-                                 </div>
-
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+               <div class="tab">
+                 <ProductTab/>
+               </div>
         </div>
         </div>
 
@@ -126,8 +64,10 @@
 <script>
 import axios from 'axios'
 import Homeslider from '../components/home_slider/Home_slider'
+import ProductTab from '../components/home_slider/producttab'
+import SideBar from '../components/home/Sidebar.vue'
     export default {
-    components:{Homeslider},
+    components:{Homeslider,ProductTab, SideBar},
         metaInfo: {
         title: 'Home Page',
         },
@@ -209,7 +149,7 @@ import Homeslider from '../components/home_slider/Home_slider'
 
             this.loadproduct();
 
-             axios.get('public/category').then(response=>{
+             axios.get('category').then(response=>{
                   this.categories = response.data
             })
 
@@ -288,8 +228,12 @@ nav > div a.nav-item.nav-link:focus
 
 img.category-image {
     width: 100%;
-    height: 140px;
+    height: 90px;
     object-fit: cover;
+}
+
+.slider{
+
 }
 
 </style>

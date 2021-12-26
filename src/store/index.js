@@ -119,13 +119,14 @@ export default new Vuex.Store({
               router.push({ name: 'Home' })
           }
 
-      }).catch(() => {
-          commit('SET_AUTHENTICATED', false)
-
-          if(router.currentRoute.name !== 'login'){
-              router.push({ name: 'Login' })
-          }
       })
+    //   .catch(() => {
+    //       commit('SET_AUTHENTICATED', false)
+
+    //       if(router.currentRoute.name !== 'login'){
+    //           router.push({ name: 'Login' })
+    //       }
+    //   })
 
     },
 

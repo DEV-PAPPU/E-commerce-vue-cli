@@ -8,6 +8,7 @@ Vue.use(VueMeta)
 
 //Important
 import axios from 'axios';
+// axios.defaults.baseURL = 'https://ecombackend.devpappu.com/api/'
 axios.defaults.baseURL = 'http://ecommerce.test/api/'
 
 import VueProgressBar from 'vue-progressbar'
@@ -75,7 +76,7 @@ Vue.filter('currency', value=> {
 
 Vue.filter('trim', value=> {
     if (!value) return ''
-    return value.substring(0, 20) + '...'
+    return value.substring(0, 30) + '...'
 });
 
 Vue.filter('trimpost', value=> {
@@ -140,6 +141,11 @@ if(auth){
     store.commit('SET_AUTH_USER', true)
 }
 
+
+//Scroll To Top
+router.afterEach(() => {
+  window.scrollTo(0, 0);
+});
 
 // loading effect
 router.beforeEach((to, from, next) => {
